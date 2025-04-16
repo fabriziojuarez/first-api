@@ -1,6 +1,6 @@
 <?php
 
-class connectionDb
+class ConnectionDb
 {
     private $hostname = "localhost:3306";
     private $user = "root";
