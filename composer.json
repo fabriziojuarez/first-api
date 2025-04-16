@@ -1,6 +1,7 @@
 {
     "name": "fabrizio_juarez/firstapi",
     "description": "My first api with php and composer",
+    "type" : "project",
     "autoload": {
         "psr-4": {
             "FabrizioJuarez\\Firstapi\\": "src/"

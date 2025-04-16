@@ -18,7 +18,6 @@ class connectionDb
                 $this->pass,
                 $this->database
             );
-            echo "conexion hecha";
             return $this->con;
         } catch (Exception $e) {
             echo $e->getMessage();
