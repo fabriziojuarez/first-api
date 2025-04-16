@@ -1,0 +1,16 @@
+{
+    "name": "fabrizio_juarez/firstapi",
+    "description": "My first api with php and composer",
+    "autoload": {
+        "psr-4": {
+            "FabrizioJuarez\\Firstapi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "fabriziojuarez",
+            "email": "fabriziojuarez79@gmail.com"
+        }
+    ],
+    "require": {}
+}
