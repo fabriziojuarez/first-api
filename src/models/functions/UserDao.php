@@ -53,7 +53,7 @@ class UserDao
 
             if (is_null($res)) {
                 $response['status'] = 401;
-                $response['error'] = "User no encontrado";
+                $response['error'] = "Usuario no encontrado";
                 echo json_encode($response);
                 return;
             }
@@ -102,7 +102,7 @@ class UserDao
 
             mysqli_close($con);
             $response['status'] = 201;
-            $response['msg'] = "User agregado correctamente";
+            $response['msg'] = "Usuario agregado correctamente";
             echo json_encode($response);
         } catch (Exception $e) {
             $response['status'] = 444;
@@ -112,12 +112,70 @@ class UserDao
         }
     }
 
-    public function update($id, $user)
+    public function update(User $user)
+    {
+        try { //REALIZAR FILTROS Y REQUEST
+            $obj = new ConnectionDb();
+            $con = $obj->getConnection();
+
+            $id = $user->getId();
+            $name = $user->getName();
+            $lastname = $user->getLastname();
+            $phone = $user->getPhone();
+
+            $query = "UPDATE users SET 
+                name_user = '$name', 
+                lastname_user = '$lastname',
+                phone_user = '$phone' 
+                WHERE id_user = $id";
+            mysqli_query($con, $query);
+
+            if (mysqli_affected_rows($con) == 0) {
+                $response['status'] = 401;
+                $response['error'] = "Error en Actualizar usuario";
+                mysqli_close($con);
+                echo json_encode($response);
+                return;
+            }
+
+            mysqli_close($con);
+            $response['status'] = 201;
+            $response['msg'] = "Usuario actualizado correctamente";
+            echo json_encode($response);
+        } catch (Exception $e) {
+            $response['status'] = 484;
+            $response['error'] = $e->getMessage();
+            echo json_encode($response);
+            return;
+        }
+    }
+
+    public function delete($id)
     {
         try {
             $obj = new ConnectionDb();
             $con = $obj->getConnection();
+
+            $query = "DELETE FROM users WHERE id_user=$id";
+            mysqli_query($con, $query);
+
+            if (mysqli_affected_rows($con) == 0) {
+                $response['status'] = 444;
+                $response['error'] = "Error en eliminar usuario";
+                mysqli_close($con);
+                echo json_encode($response);
+                return;
+            }
+
+            $response['status'] = 222;
+            $response['error'] = "Usuario eliminado correctamente";
+            mysqli_close($con);
+            echo json_encode($response);
         } catch (Exception $e) {
+            $response['status'] = 484;
+            $response['error'] = $e->getMessage();
+            echo json_encode($response);
+            return;
         }
     }
 }
