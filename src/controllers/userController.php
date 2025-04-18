@@ -16,19 +16,42 @@ switch($_SERVER['REQUEST_METHOD']){
     }
     case "POST":{
         $user = new User();
-        $user->setName($_POST['name']);
-        $user->setLastname($_POST['lastname']);
-        $user->setPhone($_POST['phone']);
+        $user->setName(null);
+        $user->setLastname(null);
+        $user->setPhone(null);
+
+        if(!empty($_REQUEST['name'])){
+            $user->setName($_POST['name']);
+        }
+        if(!empty($_REQUEST['lastname'])){
+            $user->setLastname($_POST['lastname']);
+        }
+        if(!empty($_REQUEST['phone'])){
+            $user->setPhone($_POST['phone']);
+        }
 
         $dao->store($user);
         break;
     }
     case "PUT":{
         $user = new User();
-        $user->setId($_REQUEST["id"]);
-        $user->setName($_REQUEST['name']);
-        $user->setLastname($_REQUEST['lastname']);
-        $user->setPhone($_REQUEST['phone']);
+        $user->setId(null);
+        $user->setName(null);
+        $user->setLastname(null);
+        $user->setPhone(null);
+
+        if(!empty($_REQUEST['id'])){
+            $user->setId($_REQUEST["id"]);
+        }
+        if(!empty($_REQUEST['name'])){
+            $user->setName($_REQUEST['name']);
+        }
+        if(!empty($_REQUEST['lastname'])){
+            $user->setLastname($_REQUEST['lastname']);
+        }
+        if(!empty($_REQUEST['phone'])){
+            $user->setPhone($_REQUEST['phone']);
+        }
 
         $dao->update($user);
         break;

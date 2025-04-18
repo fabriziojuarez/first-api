@@ -34,6 +34,7 @@ class UserDao
             $response['users'] = $users;
             echo json_encode($response);
         } catch (Exception $e) {
+            mysqli_close($con);
             $response['status'] = 444;
             $response['error'] = $e->getMessage();
             echo json_encode($response);
@@ -52,6 +53,7 @@ class UserDao
             $res = mysqli_fetch_row($sql);
 
             if (is_null($res)) {
+                mysqli_close($con);
                 $response['status'] = 401;
                 $response['error'] = "Usuario no encontrado";
                 echo json_encode($response);
@@ -63,10 +65,12 @@ class UserDao
             $user['lastname']   = $res[2];
             $user['phone']      = $res[3];
 
+            mysqli_close($con);
             $response['status'] = 400;
             $response['user'] = $user;
             echo json_encode($response);
         } catch (Exception $e) {
+            mysqli_close($con);
             $response['status'] = 444;
             $response['error'] = $e->getMessage();
             echo json_encode($response);
@@ -79,6 +83,28 @@ class UserDao
         try {
             $obj = new ConnectionDb();
             $con = $obj->getConnection();
+
+            if(empty($user->getName())){
+                mysqli_close($con);
+                $response['status'] = 455;
+                $response['error'] = "Falta nombre del usuario";
+                echo json_encode($response);
+                return;
+            }
+            if(empty($user->getLastname())){
+                mysqli_close($con);
+                $response['status'] = 455;
+                $response['error'] = "Falta apellido del usuario";
+                echo json_encode($response);
+                return;
+            }
+            if(empty($user->getPhone())){
+                mysqli_close($con);
+                $response['status'] = 455;
+                $response['error'] = "Falta telefono del usuario";
+                echo json_encode($response);
+                return;
+            }
 
             $name = $user->getName();
             $lastname = $user->getLastname();
@@ -94,6 +120,7 @@ class UserDao
             mysqli_query($con, $query);
 
             if (mysqli_affected_rows($con) == 0) {
+                mysqli_close($con);
                 $response['status'] = 401;
                 $response['error'] = "Error en Insertar usuario";
                 echo json_encode($response);
@@ -105,6 +132,7 @@ class UserDao
             $response['msg'] = "Usuario agregado correctamente";
             echo json_encode($response);
         } catch (Exception $e) {
+            mysqli_close($con);
             $response['status'] = 444;
             $response['error'] = $e->getMessage();
             echo json_encode($response);
@@ -117,6 +145,35 @@ class UserDao
         try { //REALIZAR FILTROS Y REQUEST
             $obj = new ConnectionDb();
             $con = $obj->getConnection();
+
+            if(empty($user->getId())){
+                mysqli_close($con);
+                $response['status'] = 455;
+                $response['error'] = "Falta id del usuario";
+                echo json_encode($response);
+                return;
+            }
+            if(empty($user->getName())){
+                mysqli_close($con);
+                $response['status'] = 455;
+                $response['error'] = "Falta nombre del usuario";
+                echo json_encode($response);
+                return;
+            }
+            if(empty($user->getLastname())){
+                mysqli_close($con);
+                $response['status'] = 455;
+                $response['error'] = "Falta apellido del usuario";
+                echo json_encode($response);
+                return;
+            }
+            if(empty($user->getPhone())){
+                mysqli_close($con);
+                $response['status'] = 455;
+                $response['error'] = "Falta telefono del usuario";
+                echo json_encode($response);
+                return;
+            }
 
             $id = $user->getId();
             $name = $user->getName();
@@ -131,9 +188,9 @@ class UserDao
             mysqli_query($con, $query);
 
             if (mysqli_affected_rows($con) == 0) {
+                mysqli_close($con);
                 $response['status'] = 401;
                 $response['error'] = "Error en Actualizar usuario";
-                mysqli_close($con);
                 echo json_encode($response);
                 return;
             }
@@ -143,6 +200,7 @@ class UserDao
             $response['msg'] = "Usuario actualizado correctamente";
             echo json_encode($response);
         } catch (Exception $e) {
+            mysqli_close($con);
             $response['status'] = 484;
             $response['error'] = $e->getMessage();
             echo json_encode($response);
@@ -160,18 +218,19 @@ class UserDao
             mysqli_query($con, $query);
 
             if (mysqli_affected_rows($con) == 0) {
+                mysqli_close($con);
                 $response['status'] = 444;
                 $response['error'] = "Error en eliminar usuario";
-                mysqli_close($con);
                 echo json_encode($response);
                 return;
             }
 
+            mysqli_close($con);
             $response['status'] = 222;
             $response['error'] = "Usuario eliminado correctamente";
-            mysqli_close($con);
             echo json_encode($response);
         } catch (Exception $e) {
+            mysqli_close($con);
             $response['status'] = 484;
             $response['error'] = $e->getMessage();
             echo json_encode($response);
