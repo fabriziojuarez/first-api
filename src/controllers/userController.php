@@ -25,14 +25,14 @@ switch($_SERVER['REQUEST_METHOD']){
     }
     case "PUT":{
         $user = new User();
-        $user->setId($_REQUEST['id']);
+        $user->setId($_REQUEST["id"]);
         $user->setName($_REQUEST['name']);
         $user->setLastname($_REQUEST['lastname']);
         $user->setPhone($_REQUEST['phone']);
 
         $dao->update($user);
         break;
-    };
+    }
     case "DELETE":{
         $dao->delete($_REQUEST['id']);
         break;
