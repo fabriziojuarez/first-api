@@ -239,7 +239,7 @@ class OrderDao
             if(empty($id)){
                 mysqli_close($con);
                 $response['status'] = 400;
-                $response['error'] = "Falta un id";
+                $response['error'] = "Falta el id de la orden";
                 http_response_code($response['status']);
                 echo json_encode($response);
                 return;

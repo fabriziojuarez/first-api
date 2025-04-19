@@ -53,6 +53,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 404;
                 $response['error'] = "Usuario no encontrado";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -84,6 +85,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Falta nombre del usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -91,6 +93,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Falta apellido del usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -98,6 +101,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Falta telefono del usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -119,6 +123,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Error en Insertar usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -137,7 +142,7 @@ class UserDao
 
     public function update(User $user)
     {
-        try { //REALIZAR FILTROS Y REQUEST
+        try {
             $obj = new ConnectionDb();
             $con = $obj->getConnection();
 
@@ -145,6 +150,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Falta id del usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -152,6 +158,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Falta nombre del usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -159,6 +166,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Falta apellido del usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -166,6 +174,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Falta telefono del usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -186,6 +195,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Error en Actualizar usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }
@@ -208,6 +218,15 @@ class UserDao
             $obj = new ConnectionDb();
             $con = $obj->getConnection();
 
+            if(empty($id)){
+                mysqli_close($con);
+                $response['status'] = 400;
+                $response['error'] = "Falta el id del usuario";
+                http_response_code($response['status']);
+                echo json_encode($response);
+                return;
+            }
+
             $query = "DELETE FROM users WHERE id_user=$id";
             mysqli_query($con, $query);
 
@@ -215,6 +234,7 @@ class UserDao
                 mysqli_close($con);
                 $response['status'] = 400;
                 $response['error'] = "Error en eliminar usuario";
+                http_response_code($response['status']);
                 echo json_encode($response);
                 return;
             }

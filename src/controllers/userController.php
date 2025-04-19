@@ -57,7 +57,11 @@ switch($_SERVER['REQUEST_METHOD']){
         break;
     }
     case "DELETE":{
-        $dao->delete($_REQUEST['id']);
+        $id = null;
+        if(!empty($_REQUEST['id'])){
+            $id = $_REQUEST['id'];
+        }
+        $dao->delete($id);
         break;
     }
 }
