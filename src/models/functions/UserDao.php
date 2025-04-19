@@ -1,7 +1,5 @@
 <?php
 
-use function PHPSTORM_META\map;
-
 require_once "./../config/connection.php";
 require_once "./../models/seeds/User.php";
 
