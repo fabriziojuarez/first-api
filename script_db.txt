@@ -1,0 +1,30 @@
+CREATE DATABASE db_api;
+USE db_api;
+
+CREATE TABLE users(
+	id_user integer AUTO_INCREMENT
+    name_user varchar(50),
+    lastname_user varchar(50),
+    phone_user integer(9),
+    PRIMARY KEY(id_user)
+);
+
+CREATE TABLE orders(
+	id_order integer AUTO_INCREMENT,
+    user_order integer,
+    item_order varchar(50),
+    quantity_order integer(3),
+    price_order decimal(5,2),
+    PRIMARY KEY(id_order)
+);
+
+ALTER TABLE orders 
+	ADD INDEX(user_order);
+
+ALTER TABLE orders 
+	ADD CONSTRAINT FK_user_iduser FOREIGN KEY (user_order) REFERENCES users(id_user);
+
+
+INSERT INTO users (name_user, lastname_user, phone_user) VALUES('Fabrizio', 'Juarez', 75285872);
+INSERT INTO users (name_user, lastname_user, phone_user) VALUES("Carlos", "Perez", 123456789);
+INSERT INTO users (name_user, lastname_user, phone_user) VALUES("Paula", "Gomez", 987654321);
